@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {Provider, useDispatch} from 'react-redux';
+import {Provider, useDispatch, useSelector} from 'react-redux';
 import {View, LogBox} from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import store from './store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {setUserInfo} from './store/slices/userSlice';
+import {setUserInfo, setUserType} from './store/slices/userSlice';
 import {KEYS} from './config/constant';
 
 import Routes from './routes/Index';
@@ -16,6 +16,7 @@ const queryClient = new QueryClient();
 
 const AppComponent = () => {
   const dispatch = useDispatch();
+  const {useTypeStore, userInfo} = useSelector(({user}) => user);
 
   LogBox.ignoreAllLogs(true);
 
@@ -26,6 +27,17 @@ const AppComponent = () => {
   // as the logic is fully contained and cleaned up in the main useEffect.
 
   const [internetConnectivity, setInternetActivity] = useState(true);
+
+  useEffect(() => {
+    const loadUserType = async () => {
+      const userType = await AsyncStorage.getItem('UserTypeSet');
+      if (userType) {
+        dispatch(setUserType(userType));
+      }
+    };
+
+    loadUserType();
+  }, [dispatch]);
 
   // ⚠️ Best Practice Improvement: Combined async logic into a dedicated useEffect hook.
   useEffect(() => {
@@ -60,10 +72,11 @@ const AppComponent = () => {
     };
   }, [dispatch]);
 
+  console.log(userInfo?.casl, 'userInfouserInfo');
+
   return (
     <View style={{flex: 1}}>
       <Routes navigationRef={navigationRef} isReadyRef={isReadyRef} />
-      {/* ⚠️ FIX: Updated component name to use PascalCase */}
       {!internetConnectivity && <NoInternet resetToSplashScreen={() => {}} />}
     </View>
   );

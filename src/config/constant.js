@@ -1,7 +1,15 @@
-export const baseURL = 'https://firewatch.tgastaging.com/api/';
-export const imageBase = 'https://firewatch.tgastaging.com/';
+export const baseURL = 'https://dev-backend.nextgenedus.com/';
+
+//export const baseURL = 'https://staging-backend.nextgenedus.com';
+
+
+//export const baseURL = 'https://dev-backend.nextgenedus.com';
+//https://staging-backend.nextgenedus.com
+
+
+export const imageBase = 'https://dev-backend.nextgenedus.com/';
+
 export const KEYS = {
   USER_INFO: 'USER_INFO',
-
   DEVICE_TOKEN: 'DEVICE_TOKEN',
 };
